@@ -28,22 +28,27 @@ z = 1.96
 ci_lower = did_estimate - z * se
 ci_upper = did_estimate + z * se
 
+# Exponentiated (levels) results
+did_estimate_exp = np.exp(did_estimate)
+ci_lower_exp = np.exp(ci_lower)
+ci_upper_exp = np.exp(ci_upper)
+
 # LaTeX table output
 latex = r"""\begin{table}[h]
 \centering
 \caption{Difference-in-Differences Estimate of the Effect of Paid Search on Revenue}
-\begin{tabular}{l c}
+\begin{tabular}{lcc}
 \hline
- & Log Scale \\
+ & Log Scale & Levels (exp) \\
 \hline
-Point Estimate ($\hat{\gamma}$) & $%.4f$ \\
-Standard Error & $%.4f$ \\
-95\%% CI & $[%.4f,\ %.4f]$ \\
+Point Estimate ($\hat{\gamma}$) & $%.4f$ & $%.4f$ \\
+Standard Error & $%.4f$ & --- \\
+95\%% CI & $[%.4f, \; %.4f]$ & $[%.4f, \; %.4f]$ \\
 \hline
 \end{tabular}
 \label{tab:did}
 \end{table}
-""" % (did_estimate, se, ci_lower, ci_upper)
+""" % (did_estimate, did_estimate_exp, se, ci_lower, ci_upper, ci_lower_exp, ci_upper_exp)
 
 import os
 os.makedirs("output/tables", exist_ok=True)
